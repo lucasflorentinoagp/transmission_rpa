@@ -1,15 +1,18 @@
-import pyautogui as r
+import subprocess
 
-def main():
-    # mouse move to x=100, y=100
-    r.moveTo(100, 100)
-    # mouse move to x=200, y=200 in 2 seconds
-    r.moveTo(200, 200, 2)
-    # mouse move to x=300, y=300 in 2 seconds with linear movement
-    r.moveTo(300, 300, 2, r.easeInOutQuad)
-    # mouse move to x=400, y=400 in 2 seconds with linear movement
-    r.moveTo(400, 400, 2, r.easeInOutQuad)
+# Iniciar o Waydroid caso não esteja rodando
+subprocess.run(["sudo", "systemctl", "start", "waydroid-container"])
 
+# Ativar o ADB no Waydroid
+subprocess.run(["sudo", "waydroid", "shell", "setprop", "service.adb.enabled", "1"])
+subprocess.run(["adb", "connect", "localhost:5555"])
 
-if __name__ == "__main__":
-    main()
+# Executar comandos dentro do shell do Waydroid
+cmd = "input tap 500 1000"  # Simular um toque na tela (posição X=500, Y=1000)
+subprocess.run(["adb", "shell", cmd])
+
+cmd = "input text 'Olá, mundo!'"  # Digitar um texto no chat
+subprocess.run(["adb", "shell", cmd])
+
+cmd = "input keyevent 66"  # Pressionar Enter
+subprocess.run(["adb", "shell", cmd])
