@@ -9,3 +9,8 @@ wheels/
 # Virtual environments
 .venv
 .env
+
+
+# project rpa_files
+rpa_*
+tagui_local.js
